@@ -18,24 +18,36 @@ Route::middleware('auth')->group(function () {
     // User Home Page
     Route::get('/home', [UserController::class, 'index'])->name('home');
     
-    // Admin Routes (Only accessible to users with admin role)
+    // Admin Routes
     Route::prefix('admin')->group(function () {
+        // Admin Dashboard
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-        Route::get('/products', [AdminController::class, 'viewProducts'])->name('admin.products');
-        Route::get('/products/create', [AdminController::class, 'createProduct'])->name('admin.products.create');
-        Route::post('/products', [AdminController::class, 'storeProduct'])->name('admin.products.store');
-        Route::get('/products/{product}/edit', [AdminController::class, 'editProduct'])->name('admin.products.edit');
-        Route::put('/products/{product}', [AdminController::class, 'updateProduct'])->name('admin.products.update');
-        Route::delete('/products/{product}', [AdminController::class, 'deleteProduct'])->name('admin.products.delete');
-        Route::resource('products', ProductController::class); // Product CRUD using ProductController
+        
+        // Product Routes
+        Route::get('/products', [ProductController::class, 'index'])->name('admin.products'); // List products
+        Route::get('/products/create', [ProductController::class, 'create'])->name('admin.products.create'); // Create product form
+        Route::post('/products', [ProductController::class, 'store'])->name('admin.products.store'); // Store new product
+        Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('admin.products.edit'); // Edit product form
+        Route::put('/products/{product}', [ProductController::class, 'update'])->name('admin.products.update'); // Update product
+        Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('admin.products.destroy'); // Delete product
+        Route::get('/products', [ProductController::class, 'index'])->name('products.index'); // Change from 'admin.products' to 'products.index'
+
     });
-});
-
-// Default route (Login page)
-Route::get('/', [AuthController::class, 'showLogin'])->name('login');
-
-// User Product Routes
-Route::middleware('auth')->group(function () {
-    // View individual product details
+    
+    // User Product Routes (view individual product details)
     Route::get('/product/{id}', [UserController::class, 'showProductDetails'])->name('product.details');
 });
+
+// Default route (Login page for non-authenticated users)
+Route::get('/', [AuthController::class, 'showLogin'])->name('login');
+
+Route::get('/admin/products', [ProductController::class, 'index'])->name('admin.products.index');
+
+// Define the route for editing a product (edit)
+Route::get('/admin/products/{product}/edit', [ProductController::class, 'edit'])->name('admin.products.edit');
+
+// Define the route for updating a product (update)
+Route::put('/admin/products/{product}', [ProductController::class, 'update'])->name('admin.products.update');
+
+// Define the route for deleting a product (delete)
+Route::delete('/admin/products/{product}', [ProductController::class, 'destroy'])->name('admin.products.destroy');

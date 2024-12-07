@@ -2,7 +2,7 @@
 
 @section('content')
     <h1>Product List</h1>
-    <a href="{{ route('products.create') }}">Add New Product</a>
+    <a href="{{ route('admin.products.create') }}">Add New Product</a>
 
     <table>
         <thead>
@@ -22,8 +22,8 @@
                     <td>{{ $product->description }}</td>
                     <td><img src="{{ asset('storage/' . $product->image) }}" alt="Product Image" width="50"></td>
                     <td>
-                        <a href="{{ route('products.edit', $product) }}">Edit</a> |
-                        <form action="{{ route('products.destroy', $product) }}" method="POST" style="display:inline;">
+                        <a href="{{ route('admin.products.edit', $product->id) }}">Edit</a> |
+                        <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit">Delete</button>

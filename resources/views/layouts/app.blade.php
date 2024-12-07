@@ -13,7 +13,7 @@
     <header>
         <nav>
             <ul>
-                <li><a href="{{ url('/') }}">Home</a></li>
+                <li><a href="{{ url('/home') }}">Home</a></li>
                 @auth
                     <li><a href="{{ url('/logout') }}">Logout</a></li>
                     @if(auth()->user()->role == 'admin')

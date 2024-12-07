@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
-use App\Http\Middleware\IsAdmin;
+use App\Http\Controllers\ProductController;
 
 // Login Routes
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -19,7 +19,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', [UserController::class, 'index'])->name('home');
     
     // Admin Routes (Only accessible to users with admin role)
-    Route::prefix('admin')->middleware('isAdmin')->group(function () {
+    Route::prefix('admin')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
         Route::get('/products', [AdminController::class, 'viewProducts'])->name('admin.products');
         Route::get('/products/create', [AdminController::class, 'createProduct'])->name('admin.products.create');
@@ -27,6 +27,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/products/{product}/edit', [AdminController::class, 'editProduct'])->name('admin.products.edit');
         Route::put('/products/{product}', [AdminController::class, 'updateProduct'])->name('admin.products.update');
         Route::delete('/products/{product}', [AdminController::class, 'deleteProduct'])->name('admin.products.delete');
+        Route::resource('products', ProductController::class); // Product CRUD using ProductController
     });
 });
 

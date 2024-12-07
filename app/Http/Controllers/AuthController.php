@@ -9,51 +9,45 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function showLogin()
-    {
+    public function showLogin() {
         return view('auth.login');
     }
 
-    public function login(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+    public function login(Request $request) {
+        // Validate input
+        $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($request->only('email', 'password'))) {
-            return redirect(Auth::user()->role === 'admin' ? '/admin/dashboard' : '/');
+        if (Auth::attempt($credentials)) {
+            return redirect()->intended('/home');
         }
 
-        return back()->with('error', 'Invalid credentials');
+        return back()->withErrors(['email' => 'Invalid credentials']);
     }
 
-    public function showRegister()
-    {
+    public function showRegister() {
         return view('auth.register');
     }
 
-    public function register(Request $request)
-    {
-        $request->validate([
+    public function register(Request $request) {
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:8|confirmed',
+            'password' => 'required|confirmed|min:8',
         ]);
 
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => 'user', // Default role is user
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => bcrypt($validated['password']),
         ]);
 
-        return redirect('/login')->with('success', 'Registration successful. Please log in.');
+        Auth::login($user);
+
+        return redirect('/home');
     }
 
-    public function logout()
-    {
+    public function logout() {
         Auth::logout();
-        return redirect('/login');
+        return redirect('/');
     }
 }

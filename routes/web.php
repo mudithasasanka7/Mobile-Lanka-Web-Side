@@ -21,9 +21,20 @@ Route::middleware('auth')->group(function () {
     // Admin Routes (Only accessible to users with admin role)
     Route::prefix('admin')->middleware('isAdmin')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-        // Add other admin routes (for adding/editing products, etc.)
+        Route::get('/products', [AdminController::class, 'viewProducts'])->name('admin.products');
+        Route::get('/products/create', [AdminController::class, 'createProduct'])->name('admin.products.create');
+        Route::post('/products', [AdminController::class, 'storeProduct'])->name('admin.products.store');
+        Route::get('/products/{product}/edit', [AdminController::class, 'editProduct'])->name('admin.products.edit');
+        Route::put('/products/{product}', [AdminController::class, 'updateProduct'])->name('admin.products.update');
+        Route::delete('/products/{product}', [AdminController::class, 'deleteProduct'])->name('admin.products.delete');
     });
 });
 
 // Default route (Login page)
 Route::get('/', [AuthController::class, 'showLogin'])->name('login');
+
+// User Product Routes
+Route::middleware('auth')->group(function () {
+    // View individual product details
+    Route::get('/product/{id}', [UserController::class, 'showProductDetails'])->name('product.details');
+});

@@ -1,32 +1,34 @@
 @extends('layouts.app')
 
 @section('content')
-<h1>Register</h1>
-@if ($errors->any())
-    <ul style="color: red;">
-        @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-@endif
-<form method="POST" action="/register">
-    @csrf
-    <div>
-        <label>Name:</label>
-        <input type="text" name="name" required>
-    </div>
-    <div>
-        <label>Email:</label>
-        <input type="email" name="email" required>
-    </div>
-    <div>
-        <label>Password:</label>
-        <input type="password" name="password" required>
-    </div>
-    <div>
-        <label>Confirm Password:</label>
-        <input type="password" name="password_confirmation" required>
-    </div>
-    <button type="submit">Register</button>
-</form>
+<div class="register-container">
+    <form method="POST" action="{{ url('/register') }}">
+        @csrf
+        <h2>Register for Mobile Lanka</h2>
+        
+        <div class="input-group">
+            <label for="name">Full Name</label>
+            <input type="text" name="name" id="name" required>
+        </div>
+        <div class="input-group">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" required>
+        </div>
+        <div class="input-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" required>
+        </div>
+        <div class="input-group">
+            <label for="password_confirmation">Confirm Password</label>
+            <input type="password" name="password_confirmation" id="password_confirmation" required>
+        </div>
+        
+        <button type="submit" class="btn">Register</button>
+
+        <!-- Link to the Login page -->
+        <div class="register-link">
+            <a href="{{ url('login') }}">Already have an account? Login</a>
+        </div>
+    </form>
+</div>
 @endsection

@@ -7,27 +7,8 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="/">Home</a>
-            @auth
-                @if (auth()->user()->role === 'admin')
-                    <a href="{{ route('admin.dashboard') }}">Admin Dashboard</a>
-                @endif
-                <a href="{{ route('logout') }}">Logout</a>
-            @else
-                <a href="{{ route('login') }}">Login</a>
-                <a href="{{ route('register') }}">Register</a>
-            @endauth
-        </nav>
-    </header>
-
-    <main>
+    <div class="container">
         @yield('content')
-    </main>
-
-    <footer>
-        <p>&copy; 2024 Mobile Lanka. All rights reserved.</p>
-    </footer>
+    </div>
 </body>
 </html>

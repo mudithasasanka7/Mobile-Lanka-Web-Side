@@ -77,6 +77,11 @@ Welcome to **Mobile Lanka**, a Laravel-based mobile phone selling application! T
 - **Email:** abcd@gmail.com
 - **Password:** 12345678
 
-<img src="https://drive.google.com/file/d/1iKQq7yEoIyorKr2nM5xqipCAJL6_D4bN/view?usp=sharing">
+----
+
+### 🔑 ScreenShot
+<img src="public/images/11.png" alt="Home Page Screenshot" width="500" height="300"/>
+<img src="public/images/12.png" alt="Home Page Screenshot" width="500" height="300"/>
+<img src="public/images/13.png" alt="Home Page Screenshot" width="500" height="300"/>
 
 ⭐ Don't forget to give the repo a star if you found it useful! 🌟

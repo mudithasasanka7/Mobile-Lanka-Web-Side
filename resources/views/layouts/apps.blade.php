@@ -17,7 +17,7 @@
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2024 Mobile Lanka</p>
+
     </footer>
 </body>
 </html>

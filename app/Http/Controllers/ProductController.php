@@ -25,25 +25,30 @@ class ProductController extends Controller
     // Store a new product in the database
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string',
+        // Validate the incoming request data
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
             'price' => 'required|numeric',
             'description' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $product = new Product();
-        $product->name = $request->name;
-        $product->price = $request->price;
-        $product->description = $request->description;
-
+        // Handle image upload if it exists
+        $imagePath = null;
         if ($request->hasFile('image')) {
-            $product->image = $request->file('image')->store('product_images', 'public');
+            $imagePath = $request->file('image')->store('product_images', 'public');
         }
 
-        $product->save();
+        // Create the product
+        Product::create([
+            'name' => $validated['name'],
+            'price' => $validated['price'],
+            'description' => $validated['description'],
+            'image' => $imagePath,
+        ]);
 
-        return redirect()->route('admin.products')->with('success', 'Product added successfully!');
+        // Redirect to the product index or some other page
+        return redirect()->route('admin.products.index')->with('success', 'Product added successfully!');
     }
 
     // Show the form to edit an existing product

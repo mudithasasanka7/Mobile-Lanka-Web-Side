@@ -51,3 +51,6 @@ Route::put('/admin/products/{product}', [ProductController::class, 'update'])->n
 
 // Define the route for deleting a product (delete)
 Route::delete('/admin/products/{product}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
+
+// Store a new product (POST request)
+Route::post('/admin/products', [ProductController::class, 'store'])->name('admin.products.store');

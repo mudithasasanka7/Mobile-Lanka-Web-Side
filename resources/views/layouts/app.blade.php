@@ -50,7 +50,7 @@
             <div style="position: relative;">
                 <a href="{{ url('/cart') }}" style="color: white; text-decoration: none;">
                     <img src="{{ asset('images/cart.png') }}" alt="Cart" style="width: 40px; height: 40px;">
-                    <span style="position: absolute; top: -5px; right: -5px; background-color: #ff6a00; color: white; padding: 2px 6px; font-size: 12px; border-radius: 50%;">3</span>
+                    <span style="position: absolute; top: -5px; right: -5px; background-color: #ff6a00; color: white; padding: 2px 6px; font-size: 12px; border-radius: 50%;">0</span>
                 </a>
             </div>
         </div>

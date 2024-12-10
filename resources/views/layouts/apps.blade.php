@@ -9,8 +9,7 @@
     <script src="{{ asset('js/script.js') }}" defer></script>
 </head>
 <body>
-    
-    <!-- login and register -->
+     <!-- today my part is collection bugs  -->
     <!-- Main Content Section -->
     <main>
         @yield('content')
